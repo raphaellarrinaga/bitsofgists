@@ -3,7 +3,26 @@
     <h1>{{ msg }}</h1>
 
     <div v-if="gists.length !== 0" class="gists-list">
-      {{ gists }}
+      <!-- @todo replace with a Gist component -->
+      <hr>
+      {{ gists.description }}
+      <br>
+      {{ gists.url }}
+      <br>
+      {{ gists.id }}
+      <br>
+      {{ gists.updated_at }}
+      <br>
+      {{ gists.files['drupal_7_php_cheat.md'].content }}
+      <!--
+      <div
+        v-for="gist in gists"
+        :key="gist.id"
+        class="gist">
+        {{ gist.description }}
+      </div>
+       -->
+      <hr>
     </div>
     <div v-else class="splash-info">
       <p>No Posts published at this time.</p>
@@ -31,7 +50,7 @@ export default {
   },
   data() {
     return {
-      gists: '',
+      gists: null,
       htmlData: '',
       gistId: '',
       file: ''
@@ -49,7 +68,7 @@ export default {
   mounted () {
     axios
       .get('https://api.github.com/gists/3b8011676da3fcb52236c495b5c95565')
-      .then(response => (this.gists = response))
+      .then(response => (this.gists = response.data))
   },
   methods: {
     // getServerData() {
