@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <Splash msg="Login to get you gists"/>
+    <Splash msg="Get your Gists"/>
     <HelloWorld msg="Welcome to Your Vue.js App"/>
   </div>
 </template>

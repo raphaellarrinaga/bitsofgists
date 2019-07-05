@@ -2,18 +2,28 @@
   <div class="splash">
     <h1>{{ msg }}</h1>
 
-    <div v-if="gists.length !== 0" class="gists-list">
+    <div v-if="gists.length !== 0" class="gist">
       <!-- @todo replace with a Gist component -->
       <hr>
-      {{ gists.description }}
-      <br>
-      {{ gists.url }}
-      <br>
-      {{ gists.id }}
-      <br>
-      {{ gists.updated_at }}
-      <br>
-      {{ gists.files['drupal_7_php_cheat.md'].content }}
+      <ul>
+        <li>
+          <b>Description : </b>{{ gists.description }}
+        </li>
+        <li>
+          <b>URL : </b>{{ gists.url }}
+        </li>
+        <li>
+          <b>ID : </b>{{ gists.id }}
+        </li>
+        <li>
+          <b>Updated at : </b>{{ gists.updated_at }}
+        </li>
+      </ul>
+      <div class="gists-content">
+        <vue-markdown>
+          {{ gists.files['drupal_7_php_cheat.md'].content }}
+        </vue-markdown>
+      </div>
       <!--
       <div
         v-for="gist in gists"
@@ -39,6 +49,7 @@
 <script>
 import VueEmbedGist from 'vue-embed-gist'
 import axios from 'axios';
+import VueMarkdown from 'vue-markdown';
 
 export default {
   name: 'HelloWorld',
@@ -46,11 +57,12 @@ export default {
     msg: String,
   },
   components: {
-    VueEmbedGist
+    VueEmbedGist,
+    VueMarkdown
   },
   data() {
     return {
-      gists: null,
+      gists: [],
       htmlData: '',
       gistId: '',
       file: ''
@@ -66,6 +78,7 @@ export default {
     };
   },
   mounted () {
+// https://api.github.com/users/raphaellarrinaga/gists
     axios
       .get('https://api.github.com/gists/3b8011676da3fcb52236c495b5c95565')
       .then(response => (this.gists = response.data))
@@ -114,4 +127,8 @@ export default {
 </script>
 
 <style scoped>
+.gist {
+  text-align: left;
+}
+/* .gists-content {} */
 </style>
