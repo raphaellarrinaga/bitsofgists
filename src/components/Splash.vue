@@ -4,8 +4,7 @@
 
     <div v-if="gists.length !== 0" class="gist">
       <!-- @todo replace with a Gist component -->
-      <hr>
-      <ul>
+      <!-- <ul>
         <li>
           <b>Description : </b>{{ gists.description }}
         </li>
@@ -23,16 +22,40 @@
         <vue-markdown>
           {{ gists.files['drupal_7_php_cheat.md'].content }}
         </vue-markdown>
-      </div>
-      <!--
+      </div> -->
+
+
+
       <div
         v-for="gist in gists"
         :key="gist.id"
         class="gist">
-        {{ gist.description }}
+
+        <ul>
+          <li>
+            <b>Description : </b>{{ gist.description }}
+          </li>
+          <li>
+            <b>URL : </b>{{ gist.url }}
+          </li>
+          <li>
+            <b>ID : </b>{{ gist.id }}
+          </li>
+          <li>
+            <b>Updated at : </b>{{ gist.updated_at }}
+          </li>
+        </ul>
+        <div class="gist-content">
+          <!-- @todo ask .content key via API -->
+          {{ gist.files[Object.keys(gist.files)[0]].raw_url }}
+          <!-- <vue-markdown> -->
+            <!-- {{ gist.files[0] }} -->
+            <!-- {{ gist.files['drupal_7_php_cheat.md'].content }} -->
+          <!-- </vue-markdown> -->
+        </div>
+        <hr>
       </div>
-       -->
-      <hr>
+
     </div>
     <div v-else class="splash-info">
       <p>No Posts published at this time.</p>
@@ -78,9 +101,9 @@ export default {
     };
   },
   mounted () {
-// https://api.github.com/users/raphaellarrinaga/gists
     axios
-      .get('https://api.github.com/gists/3b8011676da3fcb52236c495b5c95565')
+      // .get('https://api.github.com/gists/3b8011676da3fcb52236c495b5c95565')
+      .get('https://api.github.com/users/raphaellarrinaga/gists')
       .then(response => (this.gists = response.data))
   },
   methods: {
@@ -130,5 +153,5 @@ export default {
 .gist {
   text-align: left;
 }
-/* .gists-content {} */
+/* .gist-content {} */
 </style>
