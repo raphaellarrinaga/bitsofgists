@@ -2,64 +2,26 @@
   <div class="splash">
     <h1>{{ msg }}</h1>
 
-    <div v-if="gists.length !== 0" class="gist">
-      <!-- @todo replace with a Gist component -->
-      <!-- <ul>
-        <li>
-          <b>Description : </b>{{ gists.description }}
-        </li>
-        <li>
-          <b>URL : </b>{{ gists.url }}
-        </li>
-        <li>
-          <b>ID : </b>{{ gists.id }}
-        </li>
-        <li>
-          <b>Updated at : </b>{{ gists.updated_at }}
-        </li>
-      </ul>
-      <div class="gists-content">
-        <vue-markdown>
-          {{ gists.files['drupal_7_php_cheat.md'].content }}
-        </vue-markdown>
-      </div> -->
+    <section v-if="errored" class="splash-info">
+      <p>We're sorry, we're not able to retrieve this information at the moment, please try back later</p>
+    </section>
 
-
+    <section v-else class="gists">
+      <div v-if="loading">Loading...</div>
 
       <div
+        v-else
         v-for="gist in gists"
         :key="gist.id"
         class="gist">
-
-        <ul>
-          <li>
-            <b>Description : </b>{{ gist.description }}
-          </li>
-          <li>
-            <b>URL : </b>{{ gist.url }}
-          </li>
-          <li>
-            <b>ID : </b>{{ gist.id }}
-          </li>
-          <li>
-            <b>Updated at : </b>{{ gist.updated_at }}
-          </li>
-        </ul>
-        <div class="gist-content">
-          <!-- @todo ask .content key via API -->
-          {{ gist.files[Object.keys(gist.files)[0]].raw_url }}
-          <!-- <vue-markdown> -->
-            <!-- {{ gist.files[0] }} -->
-            <!-- {{ gist.files['drupal_7_php_cheat.md'].content }} -->
-          <!-- </vue-markdown> -->
-        </div>
-        <hr>
+        <gist
+          :html_url="gist.html_url"
+          :id="gist.id"
+          :updated_at="gist.updated_at"
+          :content="gist.updated_at"
+          :description="gist.description" />
       </div>
-
-    </div>
-    <div v-else class="splash-info">
-      <p>No Posts published at this time.</p>
-    </div>
+    </section>
 
     <!-- <div :v-html="htmlData"></div>
     <vue-embed-gist :gist-id="gistId" :file="file" /> -->
@@ -73,6 +35,7 @@
 import VueEmbedGist from 'vue-embed-gist'
 import axios from 'axios';
 import VueMarkdown from 'vue-markdown';
+import Gist from './Gist.vue'
 
 export default {
   name: 'HelloWorld',
@@ -80,15 +43,15 @@ export default {
     msg: String,
   },
   components: {
+    Gist,
     VueEmbedGist,
     VueMarkdown
   },
   data() {
     return {
       gists: [],
-      htmlData: '',
-      gistId: '',
-      file: ''
+      loading: true,
+      errored: false,
       // userName: '',
       // repoName: '',
       // fullRepoName: 'raphaellarrinaga/bonsai',
@@ -105,6 +68,11 @@ export default {
       // .get('https://api.github.com/gists/3b8011676da3fcb52236c495b5c95565')
       .get('https://api.github.com/users/raphaellarrinaga/gists')
       .then(response => (this.gists = response.data))
+      .catch(error => {
+        console.log(error)
+        this.errored = true
+      })
+      .finally(() => this.loading = false)
   },
   methods: {
     // getServerData() {
@@ -150,8 +118,7 @@ export default {
 </script>
 
 <style scoped>
-.gist {
-  text-align: left;
+.gists .gist + .gist {
+  margin-top: 2rem;
 }
-/* .gist-content {} */
 </style>
