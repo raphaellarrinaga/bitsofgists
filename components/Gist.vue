@@ -37,7 +37,6 @@
 <script>
 import axios from 'axios';
 import VueMarkdown from 'vue-markdown';
-
 export default {
   name: 'Gist',
   props: [
@@ -68,6 +67,7 @@ export default {
   border: 1px solid #d8dee2;
   border-radius: 5px;
   text-align: left;
+  word-break: break-word;
 }
 .gist__header {
   background: #f6f8fa;

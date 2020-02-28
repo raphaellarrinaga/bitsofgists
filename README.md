@@ -1,8 +1,8 @@
 # Bitsofgists
 
-Project created with [vue cli](https://cli.vuejs.org/guide/creating-a-project.html#vue-create)
+Project created with [nuxt js](https://nuxtjs.org/)
 
-## @todo's
+## Roadmap
 
 - cache requests (60 limit for unlogged user). Check https://stackoverflow.com/questions/49671255/vue-js-cache-http-requests-with-axios / https://github.com/axios/axios/issues/31
 - list public gists
@@ -18,32 +18,23 @@ Project created with [vue cli](https://cli.vuejs.org/guide/creating-a-project.ht
 - https://www.smartspate.com/how-to-create-a-github-user-search-web-app-using-vue-js/
 - https://vuejsdevelopers.com/2018/04/23/vue-boilerplate-template-scaffold/
 
-# Vue cli Readme
+# Nuxt Js Readme
 
-## Project setup
-```
-npm install
-```
+## Build Setup
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+``` bash
+# install dependencies
+$ yarn install
 
-### Compiles and minifies for production
-```
-npm run build
-```
+# serve with hot reload at localhost:3000
+$ yarn dev
 
-### Run your tests
-```
-npm run test
+# build for production and launch server
+$ yarn build
+$ yarn start
+
+# generate static project
+$ yarn generate
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
